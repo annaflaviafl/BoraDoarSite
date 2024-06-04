@@ -5,6 +5,7 @@ import { Background, LogoContainer, InputContainer, InputField, SubmitButton, Re
 import Logo from './assets/Logo.svg'; 
 // Importa o icone Eye
 import EyeIconeSvg from './assets/Eye.svg'; 
+import { getUsuario } from '../../services/Login';
 
 const Login = () => {
   // Estados para controlar o email, senha. Visibilidade da senha, do nome e do botão de login. Mudar style do botão de criar conta.
@@ -23,6 +24,25 @@ const Login = () => {
     setBotãoLoginVisivel(false); 
     // Marca o botão como clicado
     setRegistroClicado(true);
+  }
+
+  const buscaUsuario = () => {
+    const modelRequest = {
+      email: email,
+      password: password,
+    }
+
+    getUsuario(
+      modelRequest,
+      (result) => {
+        result.map((r) => 
+          console.log(r.email)
+        )
+      },
+      () => {
+        console.log("Erro")
+      }
+    )
   }
 
   return (
@@ -70,7 +90,7 @@ const Login = () => {
         </SenhaContainer>
         {/* Botão de login visível se (botãoLoginVisivel) for (true) */}
         {botãoLoginVisivel && (
-          <SubmitButton type="submit">Entrar</SubmitButton>
+          <SubmitButton type="submit" onClick={buscaUsuario}>Entrar</SubmitButton>
         )}
         {/* Botão para criar uma nova conta */}
         <RegisterButton type="button" onClick={registroClick} registroClicado={registroClicado}> Crie uma nova conta </RegisterButton>
