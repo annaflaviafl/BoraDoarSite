@@ -1,10 +1,9 @@
 import React from 'react';
-import { BarraNavegacao, ContainerLogo, Menu, LinkMenu, BotoesMenu, BotaoLogin, BotaoCadastro, ContainerImagem, 
-BotaoJuntese, TextoJuntese, BotaoQueroDoar, BotaoEscolha, TextoTransforme} from './index.style';
+import { BarraNavegacao, ContainerLogo, Menu, LinkMenu, BotoesMenu, BotaoLogin, BotaoCadastro, ContainerImagem, BotaoJuntese, TextoJuntese, BotaoQueroDoar, BotaoEscolha, TextoTransforme} from './index.style';
 import Logo from './assets/Logo.svg';
 import ImageHome from './assets/ImageHome.svg';
 
-const Home = () => {
+const Home = ({ isLoggedIn }) => {
   return (
     <div>
       <BarraNavegacao>
@@ -17,8 +16,8 @@ const Home = () => {
           <LinkMenu href="#">Impacto Causado</LinkMenu>
         </Menu>
         <BotoesMenu>
-          <BotaoLogin>Login</BotaoLogin>
-          <BotaoCadastro>Cadastrar</BotaoCadastro>
+          {!isLoggedIn && <BotaoLogin>Login</BotaoLogin>}
+          {!isLoggedIn && <BotaoCadastro>Cadastrar</BotaoCadastro>}
         </BotoesMenu>
       </BarraNavegacao>
       <ContainerImagem>
