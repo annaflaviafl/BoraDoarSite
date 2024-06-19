@@ -1,12 +1,17 @@
-import React from 'react';
-import { BarraNavegacao, ContainerLogo, Menu, LinkMenu, BotoesMenu, BotaoLogin, BotaoCadastro, ContainerImagem, 
-BotaoJuntese, TextoJuntese, BotaoQueroDoar, BotaoEscolha, TextoTransforme} from './index.style';
+import React, { useState } from 'react';
+import {
+  BarraNavegacao, ContainerLogo, Menu, LinkMenu, BotoesMenu, BotaoLogin, BotaoCadastro, ContainerImagem,
+  BotaoJuntese, TextoJuntese, BotaoQueroDoar, BotaoEscolha, TextoTransforme
+} from './index.style';
+
 import Logo from './assets/Logo.svg';
 import ImageHome from './assets/ImageHome.svg';
+import Doacoes from './index.doacoes';
+import './index.style.js';
 
-const Home = () => {
+const Home = ({ isLoggedIn }) => {
   return (
-    <div>
+    <>
       <BarraNavegacao>
         <ContainerLogo>
           <img src={Logo} alt="Logo" />
@@ -17,24 +22,25 @@ const Home = () => {
           <LinkMenu href="#">Impacto Causado</LinkMenu>
         </Menu>
         <BotoesMenu>
-          <BotaoLogin>Login</BotaoLogin>
-          <BotaoCadastro>Cadastrar</BotaoCadastro>
+          {!isLoggedIn && <BotaoLogin>Login</BotaoLogin>}
+          {!isLoggedIn && <BotaoCadastro>Cadastrar</BotaoCadastro>}
         </BotoesMenu>
       </BarraNavegacao>
       <ContainerImagem>
         <img src={ImageHome} alt="Imagem Home" />
         <BotaoJuntese>Junte-se a nós</BotaoJuntese>
         <TextoJuntese>
-          Ajude de forma <span>simples</span>, <span>segura</span> e <span>eficaz</span> quem está enfrentando <span style={{textDecoration: 'underline', color: '#000'}}>dificuldades</span>
+          Ajude de forma <span>simples</span>, <span>segura</span> e <span>eficaz</span> quem está enfrentando <span style={{ textDecoration: 'underline', color: '#000' }}>dificuldades</span>
         </TextoJuntese>
         <BotaoQueroDoar>Quero doar</BotaoQueroDoar>
         <BotaoEscolha>Escolha para quem doar</BotaoEscolha>
         <TextoTransforme>
-        Transforme sua generosidade em esperança. Cada doação é uma semente de mudança, cultivando um mundo melhor para todos nós. Junte-se a nós e faça a diferença hoje mesmo!
+          Transforme sua generosidade em esperança. Cada doação é uma semente de mudança, cultivando um mundo melhor para todos nós. Junte-se a nós e faça a diferença hoje mesmo!
         </TextoTransforme>
       </ContainerImagem>
-    </div>
+      <Doacoes />
+    </>
   );
-}
+};
 
 export default Home;

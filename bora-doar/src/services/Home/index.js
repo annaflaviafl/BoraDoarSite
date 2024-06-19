@@ -1,4 +1,3 @@
-// services/Login.js
 import axios from 'axios'; // ou o que for usado para fazer requisições HTTP
 import _ from 'lodash';
 import { envConfig } from "../../config/env/loc";
@@ -9,11 +8,11 @@ export function request() {
   });
 }
 
-export function getUsuario(params, callback, errorHandler) {
-    const API_URL = `${envConfig.boraDoarApi}/usuario`;
+export function getInstituicao(callback, errorHandler) {
+    const API_URL = `${envConfig.boraDoarApi}/instituicao`;
 
     request()
-        .get(API_URL, { params })
+        .get(API_URL)
         .then((result) => callback(_.get(result, 'data')))
         .catch((error) => {
             let errorData = _.get(error, 'response.data');
@@ -22,13 +21,13 @@ export function getUsuario(params, callback, errorHandler) {
 }
 
 export function postUsuario(params, callback, errorHandler) {
-    const API_URL = `${envConfig.boraDoarApi}/usuario`;
+  const API_URL = `${envConfig.boraDoarApi}/instituicao`;
 
-    request()
-        .post(API_URL, params)
-        .then((result) => callback(_.get(result, 'data')))
-        .catch((error) => {
-            let errorData = _.get(error, 'response.data');
-            errorHandler(errorData);
-        });
+  request()
+      .post(API_URL, params)
+      .then((result) => callback(_.get(result, 'data')))
+      .catch((error) => {
+          let errorData = _.get(error, 'response.data');
+          errorHandler(errorData);
+      });
 }
