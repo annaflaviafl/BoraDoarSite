@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { getInstituicao, postUsuario } from '../../services/Home';
+import { getInstituicao, postInstituicao, postDoacao } from '../../services/Home';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import iconDoar from './assets/icon-doar.png';
 import {
   SegundaPagina, TextoInstituicoes, TextoDoacao, BotoesContainer, BotaoAlimentacao, BotaoHigienicos, BotaoRoupas, BotaoAgua,
   BotaoAnimais, BotaoRoupaCama, CardContainer, Card, CardCategoria, CardContent, CardBotao, BotaoNovaInstituicao,
-  BotaoContainer, Modal, NavegacaoContainer, BotaoNavegacao, ModalOverlay // Importe ModalOverlay
+  BotaoContainer, Modal, ModalOverlay, NavegacaoContainer, BotaoNavegacao, ModalDoacao
 } from './index.style';
 
 const Doacoes = () => {
   const [selecionaCategoria, setSelecionaCategoria] = useState('Alimentação');
   const [instituicao, setInstituicao] = useState([]);
-  const [mostrarModal, setMostrarModal] = useState(false);
+  const [mostrarModalDoacao, setMostrarModalDoacao] = useState(false);
+  const [instituicaoSelecionada, setInstituicaoSelecionada] = useState(null);
+  const [valorDoacao, setValorDoacao] = useState(0);
+  const [mostrarModalCadastro, setMostrarModalCadastro] = useState(false);
   const [nome, setNome] = useState('');
   const [categoria, setCategoria] = useState('');
   const [descricao, setDescricao] = useState('');
@@ -33,7 +37,7 @@ const Doacoes = () => {
 
   const manipularCliqueCategoria = (categoria) => {
     setSelecionaCategoria(categoria);
-    setPaginaAtual(0); // Resetar para a primeira página ao mudar de categoria
+    setPaginaAtual(0);
   };
 
   const instituicaoFiltrada = instituicao.filter(inst => inst.categoria === selecionaCategoria);
@@ -41,12 +45,22 @@ const Doacoes = () => {
   const fimIndice = inicioIndice + cardsPorPagina;
   const instituicoesExibidas = instituicaoFiltrada.slice(inicioIndice, fimIndice);
 
-  const handleAbrirModal = () => {
-    setMostrarModal(true);
+  const handleAbrirModalDoacao = (inst) => {
+    setInstituicaoSelecionada(inst);
+    setMostrarModalDoacao(true);
   };
 
-  const handleFecharModal = () => {
-    setMostrarModal(false);
+  const handleFecharModalDoacao = () => {
+    setMostrarModalDoacao(false);
+    setValorDoacao(0);
+  };
+
+  const handleAbrirModalCadastro = () => {
+    setMostrarModalCadastro(true);
+  };
+
+  const handleFecharModalCadastro = () => {
+    setMostrarModalCadastro(false);
     setNome('');
     setCategoria('');
     setDescricao('');
@@ -75,7 +89,7 @@ const Doacoes = () => {
     };
 
     try {
-      await postUsuario(
+      await postInstituicao(
         modelRequest,
         (result) => {
           if (result && result.id) {
@@ -84,7 +98,7 @@ const Doacoes = () => {
             setCategoria('');
             setDescricao('');
             fetchInstituicao();
-            setMostrarModal(false);
+            setMostrarModalCadastro(false);
           } else {
             setErro('Erro ao cadastrar Instituição');
           }
@@ -108,6 +122,32 @@ const Doacoes = () => {
   const paginaAnterior = () => {
     setSlideDirection('left');
     setPaginaAtual((prev) => prev - 1);
+  };
+
+  const handleDoacao = async (valor) => {
+    const userId = localStorage.getItem('userId');
+    const dadosDoacao = {
+      idUsuario: userId,
+      idInstituicao: instituicaoSelecionada.id,
+      valor: valor !== undefined ? valor : valorDoacao,
+    };
+
+    try {
+      await postDoacao(
+        dadosDoacao,
+        (message) => {
+          alert(message);
+          handleFecharModalDoacao();
+        },
+        (error) => {
+          console.error('Erro ao fazer doação:', error);
+          alert('Erro ao fazer doação. Tente novamente mais tarde.');
+        }
+      );
+    } catch (error) {
+      console.error('Erro ao fazer doação:', error);
+      alert('Erro ao fazer doação. Tente novamente mais tarde.');
+    }
   };
 
   return (
@@ -171,7 +211,7 @@ const Doacoes = () => {
                 <h3>{inst.nome}</h3>
                 <p>{inst.descricao}</p>
               </CardContent>
-              <CardBotao className={`card-botao-${inst.categoria.replace(/ /g, '')}`}>
+              <CardBotao className={`card-botao-${inst.categoria.replace(/ /g, '')}`} onClick={() => handleAbrirModalDoacao(inst)}>
                 Quero doar
               </CardBotao>
             </Card>
@@ -185,12 +225,42 @@ const Doacoes = () => {
       </NavegacaoContainer>
 
       <BotaoContainer>
-        <BotaoNovaInstituicao onClick={handleAbrirModal}>Cadastre uma nova instituição</BotaoNovaInstituicao>
+        <BotaoNovaInstituicao onClick={handleAbrirModalCadastro}>Cadastre uma nova instituição</BotaoNovaInstituicao>
       </BotaoContainer>
 
-      {mostrarModal && (
+      {mostrarModalDoacao && (
         <>
-          <ModalOverlay onClick={handleFecharModal} />
+          <ModalOverlay onClick={handleFecharModalDoacao} />
+          <ModalDoacao>
+            <h2>Doação para a instituição:  {instituicaoSelecionada.nome}</h2>
+            <div className="cards-doacao">
+              <div className="card-doacao">
+                <p>Doar R$100,00</p>
+                <img src={iconDoar} alt="Ícone Doar" />
+                <button onClick={() => handleDoacao(100)}>Doar</button>
+              </div>
+              <div className="card-doacao">
+                <p>Doar R$50,00</p>
+                <img src={iconDoar} alt="Ícone Doar" />
+                <button onClick={() => handleDoacao(50)}>Doar</button>
+              </div>
+              <div className="card-doacao">
+                <p>Valor livre</p>
+                <img src={iconDoar} alt="Ícone Doar" />
+                <input type="number" value={valorDoacao} onChange={(e) => setValorDoacao(e.target.value)} />
+                <button onClick={() => handleDoacao()}>Doar</button>
+              </div>
+            </div>
+            <div className="button-container">
+              <button type="button" onClick={handleFecharModalDoacao}>Cancelar</button>
+            </div>
+          </ModalDoacao>
+        </>
+      )}
+
+      {mostrarModalCadastro && (
+        <>
+          <ModalOverlay onClick={handleFecharModalCadastro} />
           <Modal>
             <h2>Cadastrar Nova Instituição</h2>
             <form onSubmit={cadastrarNovaInstituicao}>
@@ -214,8 +284,7 @@ const Doacoes = () => {
               {erro && <p style={{ color: 'red' }}>{erro}</p>}
 
               <div className="button-container">
-                <button type="button" onClick={handleFecharModal}>Cancelar</button>
-               
+                <button type="button" onClick={handleFecharModalCadastro}>Cancelar</button>
                 <button type="submit">Confirmar</button>
               </div>
             </form>

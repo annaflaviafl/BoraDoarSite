@@ -530,7 +530,7 @@ export const ModalOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgb(0 0 0 / 58%);
+  background-color: rgb(0 0 0 / 70%);
   z-index: 999; 
 ` 
 
@@ -639,5 +639,116 @@ export const Modal = styled.div`
     }
   }
   `
+  export const ModalDoacao = styled.div`
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 70%;
+    max-height: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
 
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 24px;
+      color: #999;
+    }
+  
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  
+    .cards-doacao {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 800px;
+    }
+  
+    .card-doacao {
+      flex: 1;
+      margin: 0 10px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-align: center;
+    }
+  
+    .card-doacao img {
+      display: block;
+      margin: 10px auto;
+      width: 50px;
+      height: 50px;
+    }
+  
+    .card-doacao button {
+      margin-top: 20px;
+      padding: 8px 20px;
+      background-color: #5d74f1;
+      color: #fff;
+      border: 1px solid #5d74f1;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #fff;
+        color: #5d74f1;
+      }
+    }
+  
+    .card-doacao input {
+      width: 80%;
+      padding: 8px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .button-container {
+      width: 100%;
+      max-width:150px;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+
+    button {
+        flex: 1;
+        height: 42px;
+        background-color: #ED7161;
+        color: #fff;
+        border: 1px solid #ED7161;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #fff;
+          color: #ED7161;
+        }
+      }
+  `
   
