@@ -127,8 +127,8 @@ const Doacoes = () => {
   const handleDoacao = async (valor) => {
     const userId = localStorage.getItem('userId');
     const dadosDoacao = {
-      idUsuario: userId,
-      idInstituicao: instituicaoSelecionada.id,
+      usuarioId: userId,
+      instituicaoId: instituicaoSelecionada.id,
       valor: valor !== undefined ? valor : valorDoacao,
     };
 
