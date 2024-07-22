@@ -751,4 +751,146 @@ export const Modal = styled.div`
         }
       }
   `
+
+
+  export const TerceiraPagina = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 100vh;
+    width: 100%;
+  `;
+  
+  export const Grafico = styled.div`
+    background-color: #E5E5E5;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto; 
+  `;
+  
+  export const ChartBox = styled.div`
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  `;
+  
+  export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  
+    button {
+      margin-bottom: 10px;
+      background-color: #6E8DDC;
+      color: #fff;
+      border: 1px solid #6E8DDC;
+      border-radius: 55px;
+      cursor: pointer;
+      font-size: 11px;
+      padding: 6px 14px;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #fff;
+        color: #6E8DDC;
+        border: 1px solid #6E8DDC;
+      }
+  
+      &.active {
+        background-color: #fff;
+        color: #6E8DDC;
+        border: 1px solid #6E8DDC;
+      }
+    }
+  `;
+  
+  export const Chart = styled.div`
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 250px;
+    margin-top: 20px;
+  `;
+  
+  export const ChartBar = styled.div`
+    width: 70px;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `;
+  
+  export const ChartBarInner = styled.div`
+    width: 70px;
+    background-color: ${({ color }) => color};
+    height: 0;
+    border-radius: 5px;
+  `;
+  
+  export const ChartBarLabel = styled.div`
+    font-size: 12px;
+    color: #333;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px;
+    width: 70px;
+    text-align: left;
+  `;
+  
+  export const ChartBarPercentage = styled.span`
+    font-size: 17px;
+    font-weight: bold;
+    color: #000;
+    position: absolute;
+    left: 0px;
+    transform: translateY(-100%);
+  `;
+  
+  export const TextoItensDoados = styled.p`
+    background-color: #fff;
+    color: #5d74f1;
+    border: 1px solid #ccd1d638;
+    box-shadow: 2px 2px 2px #ccd1d6;
+    width: 200px;
+    padding: 6px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-left: 94px;
+    margin-top: 26px;
+  `;
+  
+  export const TextoImpacto = styled.p`
+    margin-left: 94px;
+    margin-top: 0px;
+    color: #000;
+    font-size: 28px;
+    width: calc(100% - 188px);
+    text-align: left;
+    font-family: "plus jakarta sans", sans-serif;
+    font-weight: 550;
+    line-height: 1.4;
+    
+    span {
+      color: #5d74f1;
+    }
+  `;
+  
+  export const TextoLocais = styled.p`
+    margin-left: 10px;
+    color: #000;
+    font-size: 24px;
+    text-align: left;
+    font-family: "plus jakarta sans", sans-serif;
+    font-weight: 550;
+    line-height: 1.0;
+    margin-top: 0px;
+  `;
   

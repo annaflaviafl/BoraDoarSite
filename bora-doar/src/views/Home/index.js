@@ -7,6 +7,7 @@ import {
 import Logo from './assets/Logo.svg';
 import ImageHome from './assets/ImageHome.svg';
 import Doacoes from './index.doacoes';
+import Impacto from './index.impacto.js';
 import './index.style.js';
 
 const Home = ({ isLoggedIn }) => {
@@ -39,6 +40,7 @@ const Home = ({ isLoggedIn }) => {
         </TextoTransforme>
       </ContainerImagem>
       <Doacoes />
+      <Impacto />
     </>
   );
 };
