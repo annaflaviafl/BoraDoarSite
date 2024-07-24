@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Home from './views/Home';
+import Home from './views/Home/Página-Home/index';
 import Login from './views/Login';
 
 const App = () => {

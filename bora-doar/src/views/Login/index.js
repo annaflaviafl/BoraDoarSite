@@ -19,8 +19,9 @@ const Login = ({ setIsLoggedIn }) => {
       await getUsuario(
         { email, senha: password },
         (result) => {
-          if (result && result.mensagem === 'usuário autorizado') {
+          if (result && result.mensagem === 'usuário autorizado' && result.id !== 0) {
             setIsLoggedIn(true);
+            localStorage.setItem('userId', result.id); // Salvando o ID do usuário no localStorage
             navigate('/home');
           } else if (result && result.mensagem === 'usuário não autorizado') {
             setErro('Email ou senha incorretos');
@@ -61,6 +62,11 @@ const Login = ({ setIsLoggedIn }) => {
             setPassword('');
             setMostrarInputNome(false);
             setErro(`Usuário cadastrado com sucesso.`);
+            
+            // Salvando o ID do usuário no localStorage
+            localStorage.setItem('userId', result.id);
+
+            navigate('/home');
           } else {
             setErro('Erro ao cadastrar usuário');
           }

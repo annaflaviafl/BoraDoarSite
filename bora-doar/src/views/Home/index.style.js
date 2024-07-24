@@ -530,7 +530,7 @@ export const ModalOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgb(0 0 0 / 58%);
+  background-color: rgb(0 0 0 / 70%);
   z-index: 999; 
 ` 
 
@@ -639,5 +639,298 @@ export const Modal = styled.div`
     }
   }
   `
+  export const ModalDoacao = styled.div`
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 70%;
+    max-height: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
 
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 24px;
+      color: #999;
+    }
+  
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  
+    .cards-doacao {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 800px;
+    }
+  
+    .card-doacao {
+      flex: 1;
+      margin: 0 10px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-align: center;
+    }
+  
+    .card-doacao img {
+      display: block;
+      margin: 10px auto;
+      width: 50px;
+      height: 50px;
+    }
+  
+    .card-doacao button {
+      margin-top: 20px;
+      padding: 8px 20px;
+      background-color: #5d74f1;
+      color: #fff;
+      border: 1px solid #5d74f1;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #fff;
+        color: #5d74f1;
+      }
+    }
+  
+    .card-doacao input {
+      width: 80%;
+      padding: 8px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .button-container {
+      width: 100%;
+      max-width:150px;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+
+    button {
+        flex: 1;
+        height: 42px;
+        background-color: #ED7161;
+        color: #fff;
+        border: 1px solid #ED7161;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #fff;
+          color: #ED7161;
+        }
+      }
+  `
+
+
+  export const TerceiraPagina = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 100vh;
+    width: 100%;
+  `
+  
+  export const Grafico = styled.div`
+    background-color: #E5E5E5;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto; 
+  `
+  
+  export const ChartBox = styled.div`
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  `
+  
+  export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  `
+
+  export const Button = styled.button`
+margin-bottom: 10px;
+background-color: ${(props) => (props.active ? '#fff' : '#6E8DDC')};
+color: ${(props) => (props.active ? '#6E8DDC' : '#fff')};
+border: 1px solid #6E8DDC;
+border-radius: 55px;
+cursor: pointer;
+font-size: 11px;
+padding: 6px 14px;
+transition: background-color 0.3s ease;
+
+&:hover {
+  background-color: #fff;
+  color: #6E8DDC;
+  border: 1px solid #6E8DDC;
+}
+`
+  
+  export const Chart = styled.div`
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 250px;
+    margin-top: 20px;
+  `
+  
+  export const ChartBar = styled.div`
+    width: 70px;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `
+  
+  export const ChartBarInner = styled.div`
+    width: 70px;
+    background-color: ${({ color }) => color};
+    height: 0;
+    border-radius: 5px;
+  `
+
+  export const ChartBarLabel = styled.div`
+    font-size: 12px;
+    color: #333;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px;
+    width: 70px;
+    text-align: left;
+  `
+  
+  export const ChartBarPercentage = styled.span`
+    font-size: 17px;
+    font-weight: bold;
+    color: #000;
+    position: absolute;
+    left: 0px;
+    transform: translateY(-100%);
+  `
+  
+  export const TextoItensDoados = styled.p`
+    background-color: #fff;
+    color: #5d74f1;
+    border: 1px solid #ccd1d638;
+    box-shadow: 2px 2px 2px #ccd1d6;
+    width: 200px;
+    padding: 6px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-left: 94px;
+    margin-top: 26px;
+  `
+  
+  export const TextoImpacto = styled.p`
+    margin-left: 94px;
+    margin-top: 0px;
+    color: #000;
+    font-size: 28px;
+    width: calc(100% - 188px);
+    text-align: left;
+    font-family: "plus jakarta sans", sans-serif;
+    font-weight: 550;
+    line-height: 1.4;
+    
+    span {
+      color: #5d74f1;
+    }
+  `
+  
+  export const TextoLocais = styled.p`
+    margin-left: 10px;
+    color: #000;
+    font-size: 24px;
+    text-align: left;
+    font-family: "plus jakarta sans", sans-serif;
+    font-weight: 550;
+    line-height: 1.0;
+    margin-top: 0px;
+  `
+  
+
+  export const ModalMensagemOverlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  `
+  
+  export const ModalMensagem = styled.div`
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 1000;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+  
+    p {
+      margin-bottom: 20px;
+    }
+  
+    button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+  
+      &:hover {
+        background: #0056b3;
+      }
+    }
+  `
   

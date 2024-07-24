@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import {
   BarraNavegacao, ContainerLogo, Menu, LinkMenu, BotoesMenu, BotaoLogin, BotaoCadastro, ContainerImagem,
   BotaoJuntese, TextoJuntese, BotaoQueroDoar, BotaoEscolha, TextoTransforme
-} from './index.style';
+} from '../index.style.js';
 
-import Logo from './assets/Logo.svg';
-import ImageHome from './assets/ImageHome.svg';
-import Doacoes from './index.doacoes';
-import './index.style.js';
+import Logo from '../assets/Logo.svg';
+import ImageHome from '../assets/ImageHome.svg';
+import Doacoes from '../Página-Doacoes/index.js';
+import Impacto from '../Página-Impacto/index.js';
+import '../index.style.js';
 
 const Home = ({ isLoggedIn }) => {
   return (
@@ -39,6 +40,7 @@ const Home = ({ isLoggedIn }) => {
         </TextoTransforme>
       </ContainerImagem>
       <Doacoes />
+      <Impacto />
     </>
   );
 };
