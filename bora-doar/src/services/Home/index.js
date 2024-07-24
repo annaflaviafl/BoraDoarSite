@@ -1,10 +1,9 @@
 // services/Home.js
 
-import axios from 'axios'; // Importar o axios para fazer requisições HTTP
+import axios from 'axios';
 import _ from 'lodash';
 import { envConfig } from "../../config/env/loc";
 
-// Enum para representar os períodos
 export const PeriodoEnum = {
   TodoPeriodo: 0,
   UltimoAno: 1,
@@ -12,7 +11,6 @@ export const PeriodoEnum = {
   UltimaSemana: 3
 };
 
-// Função utilitária para criar uma instância do axios com configurações comuns
 export function request() {
   return axios.create({
     baseURL: envConfig.boraDoarApi,
@@ -22,7 +20,6 @@ export function request() {
   });
 }
 
-// Função para buscar instituições
 export function getInstituicao(callback, errorHandler) {
   const API_URL = `/instituicao`;
 
@@ -35,9 +32,8 @@ export function getInstituicao(callback, errorHandler) {
     });
 }
 
-// Função para cadastrar novo usuário (instituição)
 export function postInstituicao(params, callback, errorHandler) {
-  const API_URL = `/usuario`; // Corrigir URL para endpoint de usuário
+  const API_URL = `/Instituicao`;
 
   request()
     .post(API_URL, params)
@@ -48,9 +44,8 @@ export function postInstituicao(params, callback, errorHandler) {
     });
 }
 
-// Função para cadastrar nova doação
 export function postDoacao(dadosDoacao, onSuccess, onError) {
-  const API_URL = `/doacao`; 
+  const API_URL = `/doacao`;
 
   request()
     .post(API_URL, dadosDoacao)
@@ -63,14 +58,17 @@ export function postDoacao(dadosDoacao, onSuccess, onError) {
     });
 }
 
-// Função para buscar doações por período
 export function getDoacao(periodo, callback, errorHandler) {
   const API_URL = `${envConfig.boraDoarApi}/doacao?periodo=${periodo}`;
 
   request()
     .get(API_URL)
     .then((result) => {
-      const data = _.get(result, 'data');
+      let data = _.get(result, 'data');
+
+      // Ordenar os dados pelo total de doações (descendente)
+      data.sort((a, b) => b.totalDoacoes - a.totalDoacoes);
+
       callback(data);
     })
     .catch((error) => {

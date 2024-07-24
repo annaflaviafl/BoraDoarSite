@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { getInstituicao, postInstituicao, postDoacao } from '../../services/Home';
+import { getInstituicao, postInstituicao, postDoacao } from '../../../services/Home/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import iconDoar from './assets/icon-doar.png';
+import iconDoar from '../assets/icon-doar.png';
+import { Categorias } from '../../../enums/Categorias.ts'; 
 import {
   SegundaPagina, TextoInstituicoes, TextoDoacao, BotoesContainer, BotaoAlimentacao, BotaoHigienicos, BotaoRoupas, BotaoAgua,
   BotaoAnimais, BotaoRoupaCama, CardContainer, Card, CardCategoria, CardContent, CardBotao, BotaoNovaInstituicao,
-  BotaoContainer, Modal, ModalOverlay, NavegacaoContainer, BotaoNavegacao, ModalDoacao
-} from './index.style';
+  BotaoContainer, Modal, ModalOverlay, NavegacaoContainer, BotaoNavegacao, ModalDoacao, ModalMensagem, ModalMensagemOverlay
+} from '../index.style';
 
 const Doacoes = () => {
-  const [selecionaCategoria, setSelecionaCategoria] = useState('Alimentação');
+  const [selecionaCategoria, setSelecionaCategoria] = useState(Categorias.ALIMENTACAO);
   const [instituicao, setInstituicao] = useState([]);
   const [mostrarModalDoacao, setMostrarModalDoacao] = useState(false);
   const [instituicaoSelecionada, setInstituicaoSelecionada] = useState(null);
@@ -22,14 +23,16 @@ const Doacoes = () => {
   const [erro, setErro] = useState('');
   const [paginaAtual, setPaginaAtual] = useState(0);
   const [slideDirection, setSlideDirection] = useState(null);
+  const [mostrarModalMensagem, setMostrarModalMensagem] = useState(false);
+  const [mensagem, setMensagem] = useState('');
   const cardsPorPagina = 3;
 
   const fetchInstituicao = () => {
     getInstituicao(
       (data) => setInstituicao(data),
-      (error) => console.error('Erro ao buscar instituições:', error)
+      (error) => setErro('Erro ao buscar instituições. Tente novamente mais tarde.')
     );
-  };
+  };  
 
   useEffect(() => {
     fetchInstituicao();
@@ -81,15 +84,14 @@ const Doacoes = () => {
 
   const cadastrarNovaInstituicao = async (event) => {
     event.preventDefault();
-
+  
     const modelRequest = {
       Nome: nome,
       Categoria: categoria,
       Descricao: descricao,
     };
-
-    try {
-      await postInstituicao(
+  
+      postInstituicao(
         modelRequest,
         (result) => {
           if (result && result.id) {
@@ -103,17 +105,9 @@ const Doacoes = () => {
             setErro('Erro ao cadastrar Instituição');
           }
         },
-        (error) => {
-          console.error('Erro ao conectar ao servidor:', error);
-          setErro('Erro ao conectar ao servidor');
-        }
       );
-    } catch (error) {
-      console.error('Erro ao conectar ao servidor:', error);
-      setErro('Erro ao conectar ao servidor');
-    }
   };
-
+  
   const proximaPagina = () => {
     setSlideDirection('right');
     setPaginaAtual((prev) => prev + 1);
@@ -124,30 +118,32 @@ const Doacoes = () => {
     setPaginaAtual((prev) => prev - 1);
   };
 
-  const handleDoacao = async (valor) => {
+  const handleDoacao = async () => {
     const userId = localStorage.getItem('userId');
     const dadosDoacao = {
       usuarioId: userId,
       instituicaoId: instituicaoSelecionada.id,
-      valor: valor !== undefined ? valor : valorDoacao,
+      valor: valorDoacao,
     };
-
-    try {
-      await postDoacao(
+  
+    postDoacao(
         dadosDoacao,
         (message) => {
-          alert(message);
+          setMensagem(message);
+          setMostrarModalMensagem(true);
           handleFecharModalDoacao();
         },
         (error) => {
-          console.error('Erro ao fazer doação:', error);
-          alert('Erro ao fazer doação. Tente novamente mais tarde.');
+          setErro('Erro ao fazer doação. Tente novamente mais tarde.');
+          setMensagem('');
+          setMostrarModalMensagem(true);
         }
       );
-    } catch (error) {
-      console.error('Erro ao fazer doação:', error);
-      alert('Erro ao fazer doação. Tente novamente mais tarde.');
-    }
+  };
+  
+  const handleFecharModalMensagem = () => {
+    setMostrarModalMensagem(false);
+    setMensagem('');
   };
 
   return (
@@ -158,40 +154,40 @@ const Doacoes = () => {
       </TextoDoacao>
       <BotoesContainer>
         <BotaoAlimentacao
-          onClick={() => manipularCliqueCategoria('Alimentação')}
-          ativo={selecionaCategoria === 'Alimentação'}
+          onClick={() => manipularCliqueCategoria(Categorias.ALIMENTACAO)}
+          ativo={selecionaCategoria === Categorias.ALIMENTACAO}
         >
-          Alimentação
+          {Categorias.ALIMENTACAO}
         </BotaoAlimentacao>
         <BotaoHigienicos
-          onClick={() => manipularCliqueCategoria('Itens Higiênicos')}
-          ativo={selecionaCategoria === 'Itens Higiênicos'}
+          onClick={() => manipularCliqueCategoria(Categorias.HIGIENICOS)}
+          ativo={selecionaCategoria === Categorias.HIGIENICOS}
         >
-          Itens Higiênicos
+          {Categorias.HIGIENICOS}
         </BotaoHigienicos>
         <BotaoRoupas
-          onClick={() => manipularCliqueCategoria('Roupas')}
-          ativo={selecionaCategoria === 'Roupas'}
+          onClick={() => manipularCliqueCategoria(Categorias.ROUPAS)}
+          ativo={selecionaCategoria === Categorias.ROUPAS}
         >
-          Roupas
+          {Categorias.ROUPAS}
         </BotaoRoupas>
         <BotaoAgua
-          onClick={() => manipularCliqueCategoria('Água')}
-          ativo={selecionaCategoria === 'Água'}
+          onClick={() => manipularCliqueCategoria(Categorias.AGUA)}
+          ativo={selecionaCategoria === Categorias.AGUA}
         >
-          Água
+          {Categorias.AGUA}
         </BotaoAgua>
         <BotaoAnimais
-          onClick={() => manipularCliqueCategoria('Itens para Animais')}
-          ativo={selecionaCategoria === 'Itens para Animais'}
+          onClick={() => manipularCliqueCategoria(Categorias.ANIMAIS)}
+          ativo={selecionaCategoria === Categorias.ANIMAIS}
         >
-          Itens para Animais
+          {Categorias.ANIMAIS}
         </BotaoAnimais>
         <BotaoRoupaCama
-          onClick={() => manipularCliqueCategoria('Roupas de cama')}
-          ativo={selecionaCategoria === 'Roupas de cama'}
+          onClick={() => manipularCliqueCategoria(Categorias.ROUPA_CAMA)}
+          ativo={selecionaCategoria === Categorias.ROUPA_CAMA}
         >
-          Roupas de cama
+          {Categorias.ROUPA_CAMA}
         </BotaoRoupaCama>
       </BotoesContainer>
 
@@ -247,8 +243,8 @@ const Doacoes = () => {
               <div className="card-doacao">
                 <p>Valor livre</p>
                 <img src={iconDoar} alt="Ícone Doar" />
-                <input type="number" value={valorDoacao} onChange={(e) => setValorDoacao(e.target.value)} />
-                <button onClick={() => handleDoacao()}>Doar</button>
+                <input type="number" value={valorDoacao} onChange={(e) => setValorDoacao(Number(e.target.value))} />
+                <button onClick={handleDoacao}>Doar</button>
               </div>
             </div>
             <div className="button-container">
@@ -270,12 +266,12 @@ const Doacoes = () => {
               <label>Categoria</label>
               <select value={categoria} onChange={handleCategoriaChange} required>
                 <option value="">Selecione a categoria</option>
-                <option value="Alimentação">Alimentação</option>
-                <option value="Itens Higiênicos">Itens Higiênicos</option>
-                <option value="Roupas">Roupas</option>
-                <option value="Água">Água</option>
-                <option value="Itens para Animais">Itens para Animais</option>
-                <option value="Roupas de cama">Roupas de cama</option>
+                <option value={Categorias.ALIMENTACAO}>{Categorias.ALIMENTACAO}</option>
+                <option value={Categorias.HIGIENICOS}>{Categorias.HIGIENICOS}</option>
+                <option value={Categorias.ROUPAS}>{Categorias.ROUPAS}</option>
+                <option value={Categorias.AGUA}>{Categorias.AGUA}</option>
+                <option value={Categorias.ANIMAIS}>{Categorias.ANIMAIS}</option>
+                <option value={Categorias.ROUPA_CAMA}>{Categorias.ROUPA_CAMA}</option>
               </select>
 
               <label>Descrição</label>
@@ -289,6 +285,16 @@ const Doacoes = () => {
               </div>
             </form>
           </Modal>
+        </>
+      )}
+
+      {mostrarModalMensagem && (
+        <>
+          <ModalMensagemOverlay onClick={handleFecharModalMensagem} />
+          <ModalMensagem>
+            <p>{mensagem}</p>
+            <button type="button" onClick={handleFecharModalMensagem}>Fechar</button>
+          </ModalMensagem>
         </>
       )}
     </SegundaPagina>

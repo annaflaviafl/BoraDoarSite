@@ -760,7 +760,7 @@ export const Modal = styled.div`
     justify-content: flex-start;
     height: 100vh;
     width: 100%;
-  `;
+  `
   
   export const Grafico = styled.div`
     background-color: #E5E5E5;
@@ -770,7 +770,7 @@ export const Modal = styled.div`
     width: 100%;
     max-width: 430px;
     margin: 0 auto; 
-  `;
+  `
   
   export const ChartBox = styled.div`
     background-color: #fff;
@@ -778,37 +778,31 @@ export const Modal = styled.div`
     border-radius: 25px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-  `;
+  `
   
   export const ButtonContainer = styled.div`
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
-  
-    button {
-      margin-bottom: 10px;
-      background-color: #6E8DDC;
-      color: #fff;
-      border: 1px solid #6E8DDC;
-      border-radius: 55px;
-      cursor: pointer;
-      font-size: 11px;
-      padding: 6px 14px;
-      transition: background-color 0.3s ease;
-  
-      &:hover {
-        background-color: #fff;
-        color: #6E8DDC;
-        border: 1px solid #6E8DDC;
-      }
-  
-      &.active {
-        background-color: #fff;
-        color: #6E8DDC;
-        border: 1px solid #6E8DDC;
-      }
-    }
-  `;
+  `
+
+  export const Button = styled.button`
+margin-bottom: 10px;
+background-color: ${(props) => (props.active ? '#fff' : '#6E8DDC')};
+color: ${(props) => (props.active ? '#6E8DDC' : '#fff')};
+border: 1px solid #6E8DDC;
+border-radius: 55px;
+cursor: pointer;
+font-size: 11px;
+padding: 6px 14px;
+transition: background-color 0.3s ease;
+
+&:hover {
+  background-color: #fff;
+  color: #6E8DDC;
+  border: 1px solid #6E8DDC;
+}
+`
   
   export const Chart = styled.div`
     display: flex;
@@ -816,7 +810,7 @@ export const Modal = styled.div`
     justify-content: space-around;
     height: 250px;
     margin-top: 20px;
-  `;
+  `
   
   export const ChartBar = styled.div`
     width: 70px;
@@ -825,15 +819,15 @@ export const Modal = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-  `;
+  `
   
   export const ChartBarInner = styled.div`
     width: 70px;
     background-color: ${({ color }) => color};
     height: 0;
     border-radius: 5px;
-  `;
-  
+  `
+
   export const ChartBarLabel = styled.div`
     font-size: 12px;
     color: #333;
@@ -843,7 +837,7 @@ export const Modal = styled.div`
     padding: 5px;
     width: 70px;
     text-align: left;
-  `;
+  `
   
   export const ChartBarPercentage = styled.span`
     font-size: 17px;
@@ -852,7 +846,7 @@ export const Modal = styled.div`
     position: absolute;
     left: 0px;
     transform: translateY(-100%);
-  `;
+  `
   
   export const TextoItensDoados = styled.p`
     background-color: #fff;
@@ -865,7 +859,7 @@ export const Modal = styled.div`
     font-size: 14px;
     margin-left: 94px;
     margin-top: 26px;
-  `;
+  `
   
   export const TextoImpacto = styled.p`
     margin-left: 94px;
@@ -881,7 +875,7 @@ export const Modal = styled.div`
     span {
       color: #5d74f1;
     }
-  `;
+  `
   
   export const TextoLocais = styled.p`
     margin-left: 10px;
@@ -892,5 +886,51 @@ export const Modal = styled.div`
     font-weight: 550;
     line-height: 1.0;
     margin-top: 0px;
-  `;
+  `
+  
+
+  export const ModalMensagemOverlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  `
+  
+  export const ModalMensagem = styled.div`
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 1000;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+  
+    p {
+      margin-bottom: 20px;
+    }
+  
+    button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+  
+      &:hover {
+        background: #0056b3;
+      }
+    }
+  `
   
